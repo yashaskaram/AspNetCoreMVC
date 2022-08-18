@@ -3,5 +3,8 @@
 ################################################################################
 
 /.vs
+/BookStore_App/.vs
 /BookStore_App/BookStore_App/obj
 /BookStore_App/BookStore_App/bin/debug/netcoreapp3.1
+/BookStore_App/.vs/BookStore_App/config
+/BookStore_App/.vs/BookStore_App/DesignTimeBuild
