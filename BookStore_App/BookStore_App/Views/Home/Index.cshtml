@@ -1,6 +1,15 @@
-﻿<section class="jumbotron text-center">
+﻿@*@{ 
+    ViewData["Title"] = "Home";
+}*@
+
+@{ 
+    var book = ViewData["Book"] as BookModel;
+}
+<section class="jumbotron text-center">
     <div class="container">
-        <h1>Welcome to Book Store</h1>
+        <h1> Welcome to Book Store</h1>
+        <h2>Id=@book.Id</h2>
+        <h2>Name=@book.Author</h2>
         <p class="lead text-muted">
             Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
         </p>
