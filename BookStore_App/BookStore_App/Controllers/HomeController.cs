@@ -10,14 +10,12 @@ namespace BookStore_App.Controllers
 {
     public class HomeController : Controller
     {
-        [ViewData]
-        public string Title { get; set; }
-        [ViewData]
-        public BookModel Book { get; set; }
+        [ViewData]                          //ViewData Attribute
+        public string Title { get; set; } 
+
         public ViewResult Index()
         {
             Title = "Home";
-            Book = new BookModel() { Id = 1, Author = "Mr Writer" };
 
             return View();
         }

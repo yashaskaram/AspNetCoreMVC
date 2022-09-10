@@ -12,19 +12,20 @@ namespace BookStore_App.Controllers
     {
         public readonly BookRepository _bookRepository = null;
 
-        public BookController()
+        public BookController(BookRepository bookRepository)
         {
-            _bookRepository = new BookRepository();
+            _bookRepository = bookRepository;
         }
-        public ViewResult GetAllBooks()
+        public async Task<ViewResult> GetAllBooks()
         {
-            var books = _bookRepository.GetAllBooks();
+            var books = await _bookRepository.GetAllBooks();
             return View(books);
         }
 
-        public ViewResult GetBook(int id)
+        [Route("book-details/{id}", Name = "bookdetailroute")]
+        public async Task<ViewResult> GetBook(int id)   
         {
-            var data = _bookRepository.GetBookById(id);
+            var data = await _bookRepository.GetBookById(id);
 
             return View(data);
         }
@@ -32,6 +33,29 @@ namespace BookStore_App.Controllers
         public List<BookModel> SearchBooks(string bookName, string authorName)
         {
             return _bookRepository.SearchBook(bookName, authorName);
+        }
+
+        public ViewResult AddNewBook(bool isSuccess = false, int bookId = 0)
+        {
+            ViewBag.IsSuccess = isSuccess;
+            ViewBag.BookId = bookId;
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddNewBook(BookModel book)
+        {
+            if(ModelState.IsValid)
+            {
+                int id = await _bookRepository.AddNewBook(book);
+
+                if (id > 0)
+                {
+                    return RedirectToAction(nameof(AddNewBook), new { isSuccess = true, bookId = id });
+                }
+            }
+            
+            return View();
         }
     }
 }
