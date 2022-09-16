@@ -1,6 +1,7 @@
 ﻿using BookStore_App.Models;
 using BookStore_App.Repository;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,10 +12,12 @@ namespace BookStore_App.Controllers
     public class BookController : Controller
     {
         public readonly BookRepository _bookRepository = null;
+        public readonly LanguageRepository _languageRepository = null;
 
-        public BookController(BookRepository bookRepository)
+        public BookController(BookRepository bookRepository, LanguageRepository languageRepository)
         {
             _bookRepository = bookRepository;
+            _languageRepository = languageRepository;
         }
         public async Task<ViewResult> GetAllBooks()
         {
@@ -35,8 +38,18 @@ namespace BookStore_App.Controllers
             return _bookRepository.SearchBook(bookName, authorName);
         }
 
-        public ViewResult AddNewBook(bool isSuccess = false, int bookId = 0)
+        public async Task<ViewResult> AddNewBook(bool isSuccess = false, int bookId = 0)
         {
+            var model = new BookModel()
+            {
+                //Language = "3"
+            };
+
+            var language = await _languageRepository.GetLanguages();
+
+            ViewBag.Language = new SelectList(language, "Id", "Name");
+
+
             ViewBag.IsSuccess = isSuccess;
             ViewBag.BookId = bookId;
             return View();
@@ -54,8 +67,14 @@ namespace BookStore_App.Controllers
                     return RedirectToAction(nameof(AddNewBook), new { isSuccess = true, bookId = id });
                 }
             }
-            
+
+            var language = await _languageRepository.GetLanguages();
+
+            ViewBag.Language = new SelectList(language, "Id", "Name");
+
+            ModelState.AddModelError("", "This is a custom error message");
             return View();
         }
+
     }
 }
