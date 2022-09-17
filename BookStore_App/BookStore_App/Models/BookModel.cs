@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using BookStore_App.Enum;
+using BookStore_App.Helper;
 
 namespace BookStore_App.Models
 {
@@ -12,7 +13,7 @@ namespace BookStore_App.Models
         public int Id { get; set; }
 
         [StringLength(100, MinimumLength=5)]
-        [Required(ErrorMessage ="Please enter the title of your book")]
+        [MyCustomValidation("abc", ErrorMessage ="This is very special error")]
         public string Title { get; set; }
 
         [StringLength(300)]
