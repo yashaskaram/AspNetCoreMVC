@@ -72,7 +72,8 @@ namespace BookStore_App.Controllers
 
             ViewBag.Language = new SelectList(language, "Id", "Name");
 
-            ModelState.AddModelError("", "This is a custom error message");
+            //Uncomment this to display Error message
+            //ModelState.AddModelError("", "This is a custom error message");
             return View();
         }
 

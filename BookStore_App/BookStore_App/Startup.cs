@@ -29,6 +29,12 @@ namespace BookStore_App
 #if DEBUG
             services.AddRazorPages().AddRazorRuntimeCompilation();
 
+                //Uncomment this code to disable client side validations.
+                //.AddViewOptions(options =>
+                //{
+                //    options.HtmlHelperOptions.ClientValidationEnabled = false;
+                //});
+
 #endif
             services.AddScoped<BookRepository, BookRepository>();
             services.AddScoped<LanguageRepository, LanguageRepository>();

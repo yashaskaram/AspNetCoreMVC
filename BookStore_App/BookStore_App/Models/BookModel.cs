@@ -13,7 +13,8 @@ namespace BookStore_App.Models
         public int Id { get; set; }
 
         [StringLength(100, MinimumLength=5)]
-        [MyCustomValidation("abc", ErrorMessage ="This is very special error")]
+        //[MyCustomValidation("abc", ErrorMessage ="This is very special error")]
+        [Required(ErrorMessage ="Please enter title of the book")]
         public string Title { get; set; }
 
         [StringLength(300)]
