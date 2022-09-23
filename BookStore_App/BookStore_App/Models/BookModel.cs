@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using BookStore_App.Enum;
 using BookStore_App.Helper;
+using Microsoft.AspNetCore.Http;
 
 namespace BookStore_App.Models
 {
@@ -32,5 +33,20 @@ namespace BookStore_App.Models
         [Display(Name ="Total pages")]
         [Required(ErrorMessage = "Please enter the total pages")]
         public int? TotalPages { get; set; }
+
+        [Display(Name = "Please upload cover photo of book")]
+        [Required]
+        public IFormFile CoverPhoto { get; set; }
+
+        public string CoverPhotoUrl { get; set; }
+
+        public IFormFileCollection GalleryFiles { get; set; }
+        public List<GalleryModel> Gallery { get; set; }
+
+        [Display(Name = "Please upload pdf of book")]
+        [Required]
+        public IFormFile BookPdf { get; set; }
+
+        public string BookPdfUrl { get; set; }
     }
 }
