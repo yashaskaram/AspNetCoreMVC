@@ -12,26 +12,28 @@ using System.Threading.Tasks;
 
 namespace BookStore_App.Controllers
 {
+    [Route("[controller]/[action]")]
     public class BookController : Controller
     {
-        public readonly BookRepository _bookRepository = null;
-        public readonly LanguageRepository _languageRepository = null;
+        public readonly IBookRepository _bookRepository = null;
+        public readonly ILanguageRepository _languageRepository = null;
         public readonly IWebHostEnvironment _webHostEnvironment = null;
 
-        public BookController(BookRepository bookRepository, 
-                LanguageRepository languageRepository, IWebHostEnvironment webHostEnvironment)
+        public BookController(IBookRepository bookRepository, 
+                ILanguageRepository languageRepository, IWebHostEnvironment webHostEnvironment)
         {
             _bookRepository = bookRepository;
             _languageRepository = languageRepository;
             _webHostEnvironment = webHostEnvironment;
         }
+        [Route("all-books")]
         public async Task<ViewResult> GetAllBooks()
         {
             var books = await _bookRepository.GetAllBooks();
             return View(books);
         }
 
-        [Route("book-details/{id}", Name = "bookdetailroute")]
+        [Route("book-details/{id:int:min(1)}", Name = "bookdetailroute")]
         public async Task<ViewResult> GetBook(int id)   
         {
             var data = await _bookRepository.GetBookById(id);
@@ -51,9 +53,9 @@ namespace BookStore_App.Controllers
             //    //Language = "3"
             //};
 
-            var language = await _languageRepository.GetLanguages();
+            //var language = await _languageRepository.GetLanguages();
 
-            ViewBag.Language = new SelectList(language, "Id", "Name");
+            //ViewBag.Language = new SelectList(language, "Id", "Name");
 
 
             ViewBag.IsSuccess = isSuccess;
@@ -103,9 +105,9 @@ namespace BookStore_App.Controllers
                 }
             }
 
-            var language = await _languageRepository.GetLanguages();
+            //var language = await _languageRepository.GetLanguages();
 
-            ViewBag.Language = new SelectList(language, "Id", "Name");
+            //ViewBag.Language = new SelectList(language, "Id", "Name");
 
             //Uncomment this to display Error message
             //ModelState.AddModelError("", "This is a custom error message");

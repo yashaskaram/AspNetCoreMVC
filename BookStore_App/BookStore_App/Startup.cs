@@ -36,8 +36,8 @@ namespace BookStore_App
                 //});
 
 #endif
-            services.AddScoped<BookRepository, BookRepository>();
-            services.AddScoped<LanguageRepository, LanguageRepository>();
+            services.AddScoped<IBookRepository, BookRepository>();
+            services.AddScoped<ILanguageRepository, LanguageRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -60,8 +60,29 @@ namespace BookStore_App
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapDefaultControllerRoute();
+
+                endpoints.MapControllers();
+
+                //    endpoints.MapControllerRoute(
+                //        name: "Default",
+                //        pattern: "{controller=Home}/{action=Index}/{Id?}");
+                //});
+
+                //************** Begin - Conventional routing *******************************
+
+                //endpoints.MapDefaultControllerRoute();
+
+                //endpoints.MapControllerRoute(
+                //    name: "AboutUs",
+                //    pattern: "about-us/{id?}",
+                //    defaults: new { controller = "Home", action = "AboutUs" });
+
+                //************** Ending - Conventional routing *******************************
+
             });
+
+
+
         }
     }
 }

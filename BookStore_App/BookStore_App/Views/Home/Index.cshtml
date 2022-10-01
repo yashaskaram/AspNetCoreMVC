@@ -1,7 +1,8 @@
-﻿@*@{ 
-    ViewData["Title"] = "Home";
-}*@
+﻿@*@{
+        ViewData["Title"] = "Home";
+    }*@
 
+@inject BookStore_App.Repository.IBookRepository _bookRepository
 
 <section class="jumbotron text-center">
     <div class="container">
@@ -12,36 +13,23 @@
         <p>
             <a href="#" class="btn btn-primary">Search books</a>
         </p>
+
+        @foreach (var item in await _bookRepository.GetAllBooks())
+        {
+            <h2>@item.Title</h2>
+        }
     </div>
 </section>
 
 <div class="py-5 bg-light">
     <div class="container">
         <h3 class="h3">Top Books</h3>
-        @*<big>Top Books</big>*@
-        @*<p big>Top Books using attribute</p>*@
-    <div class="row">
-        <div class="col-md-4">
-            @*<partial name="_bookThumbnail" model="new BookModel()" />*@
-            @Html.Partial("_bookThumbnail", new BookModel())
-        </div>
-        <div class="col-md-4">
-            @*<partial name="_bookThumbnail" model="new BookModel()" />*@
-            @await Html.PartialAsync("_bookThumbnail", new BookModel())
-        </div>
-        <div class="col-md-4">
-            @*<partial name="_bookThumbnail" model="new BookModel()" />*@
-            @{
-                Html.RenderPartial("_bookThumbnail", new BookModel());
-            }
-        </div>
-        <div class="col-md-4">
-            @*<partial name="_bookThumbnail" model="new BookModel()" />*@
-            @{
-                await Html.RenderPartialAsync("_bookThumbnail", new BookModel());
-            }
-        </div>
-    </div>
+
+        @*@await Component.InvokeAsync("TopBooks")*@
+
+        <vc:top-books count="6"></vc:top-books>
+
+
     </div>
 </div>
 

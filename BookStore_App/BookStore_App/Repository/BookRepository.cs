@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BookStore_App.Repository
 {
-    public class BookRepository
+    public class BookRepository : IBookRepository
     {
         public readonly BookStoreContext _context = null;
 
@@ -47,7 +47,7 @@ namespace BookStore_App.Repository
 
             return newBook.Id;
         }
-        public async  Task<List<BookModel>> GetAllBooks()
+        public async Task<List<BookModel>> GetAllBooks()
         {
 
             return await _context.Books.Select(book => new BookModel()
@@ -62,6 +62,24 @@ namespace BookStore_App.Repository
                 Category = book.Category,
                 CoverPhotoUrl = book.CoverImageUrl
             }).ToListAsync();
+        }
+
+        public async Task<List<BookModel>> GetTopBooksAsync(int count)
+        {
+
+            return await _context.Books.OrderByDescending(b => b.CreatedOn)
+                .Select(book => new BookModel()
+                {
+                    Id = book.Id,
+                    Author = book.Author,
+                    Title = book.Title,
+                    Description = book.Description,
+                    TotalPages = book.TotalPages,
+                    LanguageId = book.LanguageId,
+                    Language = book.Language.Name,
+                    Category = book.Category,
+                    CoverPhotoUrl = book.CoverImageUrl
+                }).Take(count).ToListAsync();
         }
 
         public async Task<BookModel> GetBookById(int id)
@@ -87,7 +105,7 @@ namespace BookStore_App.Repository
                      }).ToList(),
                      BookPdfUrl = book.BookPdfUrl
                  }).FirstOrDefaultAsync();
- 
+
         }
 
         public List<BookModel> SearchBook(string title, string author)
@@ -95,6 +113,9 @@ namespace BookStore_App.Repository
             return null;
         }
 
-        
+        public string GetAppName()
+        {
+            return "Book Store Application";
+        }
     }
 }

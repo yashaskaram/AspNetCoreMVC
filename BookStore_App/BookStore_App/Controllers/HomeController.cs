@@ -8,11 +8,13 @@ using System.Threading.Tasks;
 
 namespace BookStore_App.Controllers
 {
+    [Route("[controller]/[action]")]
     public class HomeController : Controller
     {
         [ViewData]                          //ViewData Attribute
         public string Title { get; set; } 
 
+        [Route("~/")]
         public ViewResult Index()
         {
             Title = "Home";
