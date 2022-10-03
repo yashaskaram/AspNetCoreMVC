@@ -2,8 +2,6 @@
         ViewData["Title"] = "Home";
     }*@
 
-@inject BookStore_App.Repository.IBookRepository _bookRepository
-
 <section class="jumbotron text-center">
     <div class="container">
         <h1> Welcome to Book Store</h1>
@@ -14,10 +12,6 @@
             <a href="#" class="btn btn-primary">Search books</a>
         </p>
 
-        @foreach (var item in await _bookRepository.GetAllBooks())
-        {
-            <h2>@item.Title</h2>
-        }
     </div>
 </section>
 
